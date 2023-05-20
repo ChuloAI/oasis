@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 import got from 'got';
 
-const oasisUrl = "https://0.0.0.0:9000";
+const oasisUrl = "http://0.0.0.0:9000";
 
 
 interface oasisResponse {
