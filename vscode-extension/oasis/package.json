@@ -1,0 +1,135 @@
+{
+  "name": "oasis",
+  "displayName": "oasis",
+  "description": "Unofficial Text-Generation-Web-UI API extension",
+  "version": "0.1.2",
+  "engines": {
+    "vscode": "^1.71.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:oasis.addDocstring"
+  ],
+  "repository": {
+    "url": "https://github.com/paolorechia/oasis"
+  },
+  "publisher": "oasis",
+  "main": "./dist/extension.js",
+  "contributes": {
+    "walkthroughs": [
+      {
+        "id": "setting-up-oasis",
+        "title": "Setting up oasis",
+        "description": "How to get started",
+        "steps": [
+          {
+            "id": "Invoking a command",
+            "title": "Invoking a command",
+            "description": "You can invoke a command by pressing `Ctrl+Shift+P` and typing `oasis`.",
+            "media": {
+              "markdown": "media/walkthrough.md"
+            },
+            "completionEvents": [
+              "onCommand:oasis.addDocstring",
+              "onCommand:oasis.addTypeHints",
+              "onCommand:oasis.fixSyntaxError",
+              "onCommand:oasis.improveCodeQuality"
+            ]
+          }
+        ]
+      }
+    ],
+    "commands": [
+      {
+        "command": "oasis.addDocstring",
+        "title": "Add Docstring to Selection"
+      },
+      {
+        "command": "oasis.addTypeHints",
+        "title": "Add type hints to selection"
+      },
+      {
+        "command": "oasis.fixSyntaxError",
+        "title": "Fix syntax error"
+      },
+      {
+        "command": "oasis.improveCodeQuality",
+        "title": "Improve code quality"
+      }
+    ],
+    "menus": {
+      "commandPalette": [
+        {
+          "command": "oasis.addDocstring",
+          "when": "editorHasSelection"
+        },
+        {
+          "command": "oasis.addTypeHints",
+          "when": "editorHasSelection"
+        },
+        {
+          "command": "oasis.fixSyntaxError",
+          "when": "editorHasSelection"
+        },
+        {
+          "command": "oasis.improveCodeQuality",
+          "when": "editorHasSelection"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "oasis.addDocstring",
+          "when": "editorHasSelection",
+          "group": "7_modification"
+        },
+        {
+          "command": "oasis.addTypeHints",
+          "when": "editorHasSelection",
+          "group": "7_modification"
+        },
+        {
+          "command": "oasis.fixSyntaxError",
+          "when": "editorHasSelection",
+          "group": "7_modification"
+        },
+        {
+          "command": "oasis.improveCodeQuality",
+          "when": "editorHasSelection",
+          "group": "7_modification"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "webpack",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/glob": "^7.2.0",
+    "@types/mocha": "^9.1.1",
+    "@types/node": "16.x",
+    "@types/vscode": "^1.71.0",
+    "@typescript-eslint/eslint-plugin": "^5.31.0",
+    "@typescript-eslint/parser": "^5.31.0",
+    "@vscode/test-electron": "^2.1.5",
+    "eslint": "^8.20.0",
+    "glob": "^8.0.3",
+    "mocha": "^10.0.0",
+    "ts-loader": "^9.3.1",
+    "typescript": "^4.7.4",
+    "webpack": "^5.74.0",
+    "webpack-cli": "^4.10.0"
+  },
+  "dependencies": {
+    "got": "^12.5.0"
+  }
+}
