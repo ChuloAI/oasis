@@ -1,6 +1,6 @@
-# pydex README
+# oasis README
 
-A small plugin that is built on top of the OpenAI's Codex API private beta to add a few helper commands for Python programs.
+A small plugin that is built on top text-generation-web-ui API.
 
 ## Features
 
@@ -16,36 +16,30 @@ Use at your own risk :)
 
 ## Requirements
 
-You need a pydex token to use this extension. You can signup for free at:
-
-https://signup.codex.openimagegenius.com/signup
+You need to setup text-generation-web-ui: https://github.com/oobabooga/text-generation-webui
 
 ## Extension Settings
 
 There are no pre-defined settings for this extension. It should add the following commands to your environment:
 
 ```
-onCommand:pydex.addDocstring
-onCommand:pydex.addTypeHints
-onCommand:pydex.fixSyntaxError
-onCommand:pydex.improveCodeQuality
+onCommand:oasis.addDocstring
+onCommand:oasis.addTypeHints
+onCommand:oasis.fixSyntaxError
+onCommand:oasis.improveCodeQuality
 ```
 
 You can bind these to your favorite key.
 
-## Known Issues
+I'd look into making it more flexible in the future.
 
+## Known Issues
 
 ## Release Notes
 
-
 ### 0.1.0
 
-First beta release with the initial features:
-
-1. Google OAuth Signup.
-2. Rate limit.
-3. Add docstrings to selection.
-4. Add unit tests to the selection.
-5. Fix syntax errors on the selection.
-6. Improve code quality on the selection.
+1. Add docstrings to selection.
+2. Add unit tests to the selection.
+3. Fix syntax errors on the selection.
+4. Improve code quality on the selection.
