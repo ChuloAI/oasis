@@ -9,9 +9,7 @@
   "categories": [
     "Other"
   ],
-  "activationEvents": [
-    "onCommand:oasis.addDocstring"
-  ],
+  "activationEvents": [],
   "repository": {
     "url": "https://github.com/paolorechia/oasis"
   },
@@ -130,6 +128,6 @@
     "webpack-cli": "^4.10.0"
   },
   "dependencies": {
-    "got": "^12.5.0"
+    "got": "^12.6.0"
   }
 }

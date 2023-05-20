@@ -1,5 +1,4 @@
 import * as vscode from 'vscode';
-import { SecretStorage } from "vscode";
 import got from 'got';
 
 const oasisUrl = "https://0.0.0.0:9000";
@@ -19,7 +18,6 @@ async function useoasis(command: string) {
 	if (!activeEditor) {
 		return;
 	}
-
 
 	const document = activeEditor.document;
 	const selection = activeEditor.selection;
@@ -45,14 +43,12 @@ async function useoasis(command: string) {
 			body: requestBody
 		}).json();
 	} catch (e: any) {
-		const apiStatusCode = `Error calling API: ${e.response.statusCode}`;
+		vscode.window.showErrorMessage("Oasis Plugin: error calling the API")
 		try {
-			const errorMessage = JSON.parse(e.response.body).Message;
-			console.error(errorMessage);
-			vscode.window.showErrorMessage(errorMessage);
-		} catch (error) {
-			console.error("Error parsing error response", error);
+			const apiStatusCode = `Error calling API: ${e.response.statusCode}`;
 			vscode.window.showErrorMessage(apiStatusCode);
+		} catch (error) {
+			console.error("Error parsing error response code", error);
 		}
 	}
 
@@ -70,9 +66,6 @@ async function useoasis(command: string) {
 };
 
 export function activate(context: vscode.ExtensionContext) {
-
-	const secrets: SecretStorage = context.secrets;
-
 	const commands = [
 		["addDocstring", "add_docstring"],
 		["addTypeHints", "add_type_hints"],
@@ -83,7 +76,7 @@ export function activate(context: vscode.ExtensionContext) {
 	commands.forEach(tuple_ => {
 		const [commandName, oasisCommand] = tuple_;
 		const command = vscode.commands.registerCommand(`oasis.${commandName}`, () => {
-			useoasis(secrets, oasisCommand);
+			useoasis(oasisCommand);
 		});
 		context.subscriptions.push(command);
 	});
