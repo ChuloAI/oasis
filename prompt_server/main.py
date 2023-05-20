@@ -24,6 +24,7 @@ commands_mapping = {
     "fix_syntax_error": FIX_SYNTAX_ERROR,
     "improve_code_quality": IMPROVE_CODE_QUALITY
 }
+MAGIC_STOP_STRING = "###Done"
 
 llm_client = build_text_generation_web_ui_client_llm()
 
@@ -38,4 +39,10 @@ def read_root(command, request: Request):
         raise HTTPException(status_code=404, detail=f"Command not supported: {command}")
     result = llm_client._call(prompt=prompt_to_apply.format(input=received_code), stop="###DONE")
     logger.info("LLM output: '%s'", result)
+    if MAGIC_STOP_STRING not in result:
+        raise HTTPException(status_code=500, detail="LLM failed to fulfill instruction")
+
+    resulting_code = result.split(MAGIC_STOP_STRING)[0]
+    logger.info("LLM output: '%s'", resulting_code)
+
     return {"Hello": "World"}

@@ -1,7 +1,30 @@
-IMPROVE_CODE_QUALITY = """
-Below is a Python function:
+IMPROVE_CODE_QUALITY = """You're an AI programmer with the task of helping improving the code quality.
+You receive code snippets each day with a problem. For instance, commonly they poorly written.
+You communicate your answer back over a specific protocol of adding a ###Done after each input question.
+
+Example 1
+Below is a Python function without docstrings or with incomplete docstrings:
+###CodeToFix:
+def print_hello_world_twice():
+    print("hello_world")
+    print("hello_world")
+
+###Task: improve code quality
+###Thought: I should remove the duplication by introducing a N parameter and a for loop to print the string.
+###FixedCode:
+def print_hello_world(n=2):
+    for _ in range(n):
+        print("hello_world")
+    '''This functions print the string 'hello_world' to the standard output.'''
+
+###Done
+
+Now let's begin!
+
+Below is a Python function without docstrings or with incomplete docstrings:
+###CodeToFix:
 {input}
 
-Attempt to improve it's quality by rewriting it. Once you finish, add the tag ###DONE:
-
+###Task: Add docstrings to the function above.
+###Thought:
 """
