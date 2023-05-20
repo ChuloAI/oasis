@@ -25,6 +25,9 @@ commands_mapping = {
     "improve_code_quality": IMPROVE_CODE_QUALITY
 }
 MAGIC_STOP_STRING = "###Done"
+MAGIC_SPLIT_STRING = "###FixedCode"
+MAGIC_PYTHON_MD_START = "```python"
+MAGIC_PYTHON_MD_END = "```"
 
 llm_client = build_text_generation_web_ui_client_llm()
 
@@ -35,14 +38,26 @@ def read_root(command, request: Request):
     received_code = request.data
     try:
         prompt_to_apply = commands_mapping[command]
+        logger.info("Loaded prompt: '%s'", prompt_to_apply)
+
     except KeyError:
         raise HTTPException(status_code=404, detail=f"Command not supported: {command}")
-    result = llm_client._call(prompt=prompt_to_apply.format(input=received_code), stop="###DONE")
+
+    logger.info("Calling LLM...")
+    result = llm_client._call(prompt=prompt_to_apply.format(input=received_code), stop=[MAGIC_STOP_STRING])
     logger.info("LLM output: '%s'", result)
-    if MAGIC_STOP_STRING not in result:
-        raise HTTPException(status_code=500, detail="LLM failed to fulfill instruction")
+    if MAGIC_STOP_STRING in result:
+        result = result.split(MAGIC_STOP_STRING)[0]
 
-    resulting_code = result.split(MAGIC_STOP_STRING)[0]
-    logger.info("LLM output: '%s'", resulting_code)
+    if MAGIC_SPLIT_STRING in result:
+        result = result.split(MAGIC_SPLIT_STRING)[1]
 
-    return {"Hello": "World"}
+    if MAGIC_PYTHON_MD_START in result:
+        result = result.split(MAGIC_PYTHON_MD_START)[1]
+
+    if MAGIC_PYTHON_MD_END in result:
+        result = result.split(MAGIC_PYTHON_MD_END)[0]
+
+    logger.info("parsed output: '%s'", result)
+
+    return {"text": result}

@@ -52,7 +52,7 @@ class _HTTPBaseLLM:
 
 def ui_default_parameters():
     return {
-        "max_new_tokens": 250,
+        "max_new_tokens": 1024,
         "do_sample": True,
         "temperature": 0.001,
         "top_p": 0.1,

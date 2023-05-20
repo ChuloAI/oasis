@@ -3,14 +3,8 @@ import got from 'got';
 
 const oasisUrl = "http://0.0.0.0:9000";
 
-
 interface oasisResponse {
-	response: EditResponse;
-}
-
-interface EditResponse {
 	text: string;
-	index: number;
 }
 
 async function useoasis(command: string) {
@@ -40,7 +34,10 @@ async function useoasis(command: string) {
 				"Content-Type": "application/json",
 				// eslint-disable-next-line @typescript-eslint/naming-convention
 			},
-			body: requestBody
+			body: requestBody,
+			timeout: {
+				request: 300000  // 5 minutes max
+			}
 		}).json();
 	} catch (e: any) {
 		vscode.window.showErrorMessage("Oasis Plugin: error calling the API")
@@ -53,8 +50,8 @@ async function useoasis(command: string) {
 	}
 
 	if (response) {
-		console.log("From got", response);
-		const editedText = response.response.text;
+		console.log("From got", response.text);
+		const editedText = response.text;
 
 		activeEditor.edit(editBuilder => {
 			console.log("Edit builder", editBuilder);

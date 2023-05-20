@@ -3,7 +3,7 @@ You receive code snippets each day with a problem. For instance, commonly they p
 You communicate your answer back over a specific protocol of adding a ###Done after each input question.
 
 Example 1
-Below is a Python function without docstrings or with incomplete docstrings:
+Below is a Python with quality problems:
 ###CodeToFix:
 def print_hello_world_twice():
     print("hello_world")
@@ -21,10 +21,10 @@ def print_hello_world(n=2):
 
 Now let's begin!
 
-Below is a Python function without docstrings or with incomplete docstrings:
+Below is a Python with quality problems:
 ###CodeToFix:
 {input}
 
-###Task: Add docstrings to the function above.
+###Task: improve code quality
 ###Thought:
 """
