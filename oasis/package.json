@@ -1,6 +1,6 @@
 {
-  "name": "oasis",
-  "displayName": "oasis",
+  "name": "oasis-llamas",
+  "displayName": "oasis-llamas",
   "description": "Unofficial Text-Generation-Web-UI API extension",
   "version": "0.1.2",
   "engines": {
@@ -13,7 +13,7 @@
   "repository": {
     "url": "https://github.com/paolorechia/oasis"
   },
-  "publisher": "oasis",
+  "publisher": "oasis-llamas",
   "main": "./dist/extension.js",
   "contributes": {
     "walkthroughs": [
