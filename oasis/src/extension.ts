@@ -1,8 +1,6 @@
 import * as vscode from 'vscode';
 import got from 'got';
 
-const oasisUrl = "http://0.0.0.0:9000";
-
 interface oasisResponse {
 	text: string;
 }
@@ -12,7 +10,9 @@ async function useoasis(command: string) {
 	if (!activeEditor) {
 		return;
 	}
-
+	console.log("Reading config")
+	const oasisUrl = vscode.workspace.getConfiguration('oasis').get("prompt_server_url")
+	console.log("Oasis URL:", oasisUrl);
 	const document = activeEditor.document;
 	const selection = activeEditor.selection;
 
@@ -68,7 +68,7 @@ export function activate(context: vscode.ExtensionContext) {
 		["addTypeHints", "add_type_hints"],
 		["addUnitTest", "add_unit_test"],
 		["fixSyntaxError", "fix_syntax_error"],
-		["improveCodeQuality", "improve_code_quality"],
+		["customPrompt", "custom_prompt"],
 	];
 	commands.forEach(tuple_ => {
 		const [commandName, oasisCommand] = tuple_;
