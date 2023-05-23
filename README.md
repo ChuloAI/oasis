@@ -1,5 +1,8 @@
 # Oasis
 
+NOTE: main is currently unstable
+Please use tag v0.1.3
+
 ## Local LLamas on VSCode
 **WARNING**: does not yet work too well!
 
@@ -7,7 +10,7 @@
 1. Install text-generation-web-ui, start it with API: https://github.com/oobabooga/text-generation-webui
 2. Start the FastAPI server in `prompt_server`:
 ```
-    git clone: https://github.com/paolorechia/oasis
+    git clone: https://github.com/paolorechia/oasis@v0.1.3
     cd prompt_server
     pip install -r requirements.txt
     ./start_uvicorn.sh

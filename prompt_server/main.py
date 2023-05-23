@@ -1,16 +1,12 @@
 from fastapi import FastAPI, HTTPException
 import logging
-from prompts.add_doc_string import ADD_DOC_STRING
-from prompts.add_type_hints import ADD_TYPE_HINTS
-from prompts.fix_syntax_error import FIX_SYNTAX_ERROR
-from prompts.custom_prompt import CUSTOM_PROMPT
+from guidance_prompts.add_doc_string import ADD_DOC_STRING
 
 from pydantic import BaseModel
-from text_generation_web_ui import build_text_generation_web_ui_client_llm
+from guidance_client import call_guidance
 
 logger = logging.getLogger("uvicorn")
 logger.setLevel(logging.DEBUG)
-
 
 class Request(BaseModel):
     data: str
@@ -19,17 +15,16 @@ class Request(BaseModel):
 app = FastAPI()
 
 commands_mapping = {
-    "add_docstring": ADD_DOC_STRING,
-    "add_type_hints": ADD_TYPE_HINTS,
-    "fix_syntax_error": FIX_SYNTAX_ERROR,
-    "custom_prompt": CUSTOM_PROMPT
+    "add_docstring": ADD_DOC_STRING
+    # "add_type_hints": ADD_TYPE_HINTS,
+    # "fix_syntax_error": FIX_SYNTAX_ERROR,
+    # "custom_prompt": CUSTOM_PROMPT
 }
 MAGIC_STOP_STRING = "###Done"
 MAGIC_SPLIT_STRING = "###FixedCode"
 MAGIC_PYTHON_MD_START = "```python"
 MAGIC_PYTHON_MD_END = "```"
 
-llm_client = build_text_generation_web_ui_client_llm()
 
 @app.post("/{command}/")
 def read_root(command, request: Request):
@@ -44,7 +39,12 @@ def read_root(command, request: Request):
         raise HTTPException(status_code=404, detail=f"Command not supported: {command}")
 
     logger.info("Calling LLM...")
-    result = llm_client._call(prompt=prompt_to_apply.format(input=received_code), stop=[MAGIC_STOP_STRING])
+    result = call_guidance(
+        prompt_template=prompt_to_apply.prompt_template,
+        input_vars={"input": received_code},
+        output_vars={"output"},
+        guidance_kwargs={}
+    )
     logger.info("LLM output: '%s'", result)
     if MAGIC_STOP_STRING in result:
         result = result.split(MAGIC_STOP_STRING)[0]
