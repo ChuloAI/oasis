@@ -3,7 +3,7 @@ import logging
 from prompts.add_doc_string import ADD_DOC_STRING
 from prompts.add_type_hints import ADD_TYPE_HINTS
 from prompts.fix_syntax_error import FIX_SYNTAX_ERROR
-from prompts.improve_code_quality import IMPROVE_CODE_QUALITY
+from prompts.custom_prompt import CUSTOM_PROMPT
 
 from pydantic import BaseModel
 from text_generation_web_ui import build_text_generation_web_ui_client_llm
@@ -22,7 +22,7 @@ commands_mapping = {
     "add_docstring": ADD_DOC_STRING,
     "add_type_hints": ADD_TYPE_HINTS,
     "fix_syntax_error": FIX_SYNTAX_ERROR,
-    "improve_code_quality": IMPROVE_CODE_QUALITY
+    "custom_prompt": CUSTOM_PROMPT
 }
 MAGIC_STOP_STRING = "###Done"
 MAGIC_SPLIT_STRING = "###FixedCode"
