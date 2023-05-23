@@ -19,7 +19,7 @@ class Request(BaseModel):
 app = FastAPI()
 
 print("Loading model, this may take a while...")
-llama = guidance.llms.Transformers("TheBloke/wizardLM-7B-HF", device=0, load_in_8bit=True)
+llama = guidance.llms.Transformers("TheBloke/wizardLM-7B-HF", device_map="auto", load_in_8bit=True)
 print("Server loaded!")
 
 

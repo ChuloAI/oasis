@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException
 import logging
-from guidance_prompts.add_doc_string import ADD_DOC_STRING
+from guidance_prompts.add_doc_string import doc_string_guidance_prompt
 
 from pydantic import BaseModel
 from guidance_client import call_guidance
@@ -15,7 +15,7 @@ class Request(BaseModel):
 app = FastAPI()
 
 commands_mapping = {
-    "add_docstring": ADD_DOC_STRING
+    "add_docstring": doc_string_guidance_prompt
     # "add_type_hints": ADD_TYPE_HINTS,
     # "fix_syntax_error": FIX_SYNTAX_ERROR,
     # "custom_prompt": CUSTOM_PROMPT
@@ -42,9 +42,10 @@ def read_root(command, request: Request):
     result = call_guidance(
         prompt_template=prompt_to_apply.prompt_template,
         input_vars={"input": received_code},
-        output_vars={"output"},
+        output_vars=["output"],
         guidance_kwargs={}
     )
+    result = result["output"]
     logger.info("LLM output: '%s'", result)
     if MAGIC_STOP_STRING in result:
         result = result.split(MAGIC_STOP_STRING)[0]
