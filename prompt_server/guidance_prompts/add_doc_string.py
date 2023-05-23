@@ -26,7 +26,7 @@ Below is a Python block of codewithout docstrings or with incomplete docstrings:
 
 ###Task: Add docstrings to the code block above.
 ###FixedCode:
-{{gen 'output'}}
+{{gen 'output' temperature=0.1 max_tokens=500 stop='###Done'}}
 """,
     guidance_kwargs={},
     input_vars=["input"],
