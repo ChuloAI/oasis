@@ -4,6 +4,19 @@ import guidance
 from guidance import Program
 from pydantic import BaseModel
 from typing import Dict, List
+import torch
+
+from transformers import BitsAndBytesConfig
+
+
+# New 4 bit quantized
+nf4_config = BitsAndBytesConfig(
+   load_in_4bit=True,
+   bnb_4bit_quant_type="nf4",
+   bnb_4bit_use_double_quant=True,
+   bnb_4bit_compute_dtype=torch.bfloat16
+)
+
 
 logger = logging.getLogger("uvicorn")
 logger.setLevel(logging.DEBUG)
@@ -19,7 +32,9 @@ class Request(BaseModel):
 app = FastAPI()
 
 print("Loading model, this may take a while...")
-llama = guidance.llms.Transformers("TheBloke/wizardLM-7B-HF", device_map="auto", load_in_8bit=True)
+# model = "TheBloke/wizardLM-7B-HF"
+model = "Salesforce/codegen-16B-mono"
+llama = guidance.llms.Transformers(model, quantization_config=nf4_config)
 print("Server loaded!")
 
 
