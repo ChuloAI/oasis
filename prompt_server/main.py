@@ -1,6 +1,7 @@
 from fastapi import FastAPI, HTTPException
 import logging
-from guidance_prompts.add_doc_string import doc_string_guidance_prompt
+import codegen350_guidance_prompts
+import wizard_lm_guidance_prompts
 
 from pydantic import BaseModel
 from guidance_client import call_guidance
@@ -14,8 +15,11 @@ class Request(BaseModel):
 
 app = FastAPI()
 
+
+prompts_module = codegen350_guidance_prompts
+
 commands_mapping = {
-    "add_docstring": doc_string_guidance_prompt
+    "add_docstring": prompts_module.doc_string_guidance_prompt
     # "add_type_hints": ADD_TYPE_HINTS,
     # "fix_syntax_error": FIX_SYNTAX_ERROR,
     # "custom_prompt": CUSTOM_PROMPT

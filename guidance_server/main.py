@@ -33,8 +33,11 @@ app = FastAPI()
 
 print("Loading model, this may take a while...")
 # model = "TheBloke/wizardLM-7B-HF"
-model = "Salesforce/codegen-16B-mono"
-llama = guidance.llms.Transformers(model, quantization_config=nf4_config)
+# model = "Salesforce/codegen-16B-mono"
+model = "Salesforce/codegen-350m-mono"
+# model = "Salesforce/codegen2-7B"
+
+llama = guidance.llms.Transformers(model, quantization_config=nf4_config, trust_remote_code=True, revision="main")
 print("Server loaded!")
 
 
