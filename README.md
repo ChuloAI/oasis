@@ -1,21 +1,24 @@
 # Oasis
+The idea is generate code with the assistance of guidance library, using open source LLM models that run locally.
+This library is exposed as a VSCode plugin, and adds code-generation commands on editor selection (invoked through right-click or command palette).
 
+NOTE: main is currently unstable, developing the use of guidance prompts (see guidance library: https://github.com/microsoft/guidance)
 
-NOTE: main is currently unstable, developing the use of guidance prompts.
+Version v0.1.4 will be released soon, which uses guidance with Salesforce Codegen models. This is still in development, highly experimental.
 
-Please use tag v0.1.3 for the more stable version (though also not as reliable)
+**WARNING**: Only add docstring to functions command is somewhat stable at the moment.
 
-This is still in development, highly experimental.
+## Local Codegen Models on VSCode
+How does it work?
 
-Change of plans: the idea is to roll not depend on text-generation-webui but on our own server with the guidance library,
-to explore the library to it's fullest.
-
-## Local LLamas on VSCode
-**WARNING**: does not yet work too well!
+TODO: add proper explanation here 
 
 ### Installation
 
-## If using v.0.1.3
+## If using v0.1.3
+If you want to use text-generation-webui with simpler prompts, use v0.1.3. This is a deprecated feature, newer versions will no longer support `text-generation-webui`, at least for the time being.
+
+
 1. Install text-generation-web-ui, start it with API: https://github.com/oobabooga/text-generation-webui
 
 `git clone: https://github.com/paolorechia/oasis@v0.1.3`
@@ -28,8 +31,13 @@ to explore the library to it's fullest.
 ```
 
 
-## If using main
+## If using v0.1.4 or main
+Main:
 `git clone: https://github.com/paolorechia/oasis@main`
+
+Or v0.1.4:
+
+`git clone: https://github.com/paolorechia/oasis@v0.1.4`
 
 
 1. Start the FastAPI server in `guidance_server`:

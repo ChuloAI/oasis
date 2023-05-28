@@ -33,8 +33,8 @@ app = FastAPI()
 
 print("Loading model, this may take a while...")
 # model = "TheBloke/wizardLM-7B-HF"
-# model = "Salesforce/codegen-350m-mono"
-model = "Salesforce/codegen-2b-mono"
+model = "Salesforce/codegen-350m-mono"
+# model = "Salesforce/codegen-2b-mono"
 # model = "Salesforce/codegen-6b-mono"
 # model = "Salesforce/codegen-16B-mono"
 
