@@ -30,18 +30,18 @@ class DocStringCommand(Command):
 
     def prompt_picker(self, input_: str) -> Tuple[str, GuidancePrompt, Dict[str, str]]:
         is_function = "):\n" in input_
-        if is_function:
+        prompt_key = "None"
+        if is_function and len(input_.split(":\n")) == 2:
             logger.info("Detected function")
             parts = input_.split(":\n")
             logger.info("Broke into parts: %s", parts)
-            if len(parts) == 2:
-                function_header = parts[0] + ":\n"
-                function_body = parts[1]
-                logger.info("Found function header and body")
+            function_header = parts[0] + ":\n"
+            function_body = parts[1]
+            logger.info("Found function header and body")
 
-                prompt_key = "function_prompt"
-                return_value = prompt_key, self.prompt[prompt_key], {"function_header": function_header, "function_body": function_body}
-        
+            prompt_key = "function_prompt"
+            return_value = prompt_key, self.prompt[prompt_key], {"function_header": function_header, "function_body": function_body}
+
         else:
             logger.warn("Failed to identify specific type of code block, falling back to generic prompt")
 
