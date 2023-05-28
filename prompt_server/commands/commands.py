@@ -1,11 +1,10 @@
 import logging
-import ast
 import abc
 from dataclasses import dataclass
 
 from prompts_interface import PromptModuleInterface
 from guidance_prompt import GuidancePrompt
-from typing import Dict, Callable, Tuple
+from typing import Dict, Tuple
 
 
 logger = logging.getLogger("uvicorn")
@@ -38,7 +37,7 @@ class DocStringCommand(Command):
                 logger.info("Found function header and body")
 
                 prompt_key = "function_prompt"
-                return_value = self.prompt[prompt_key], {"header": function_header, "body": function_body}
+                return_value = self.prompt[prompt_key], {"function_header": function_header, "function_body": function_body}
         
         else:
             logger.warn("Failed to identify specific type of code block, falling back to generic prompt")

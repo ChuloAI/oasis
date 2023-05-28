@@ -108,14 +108,18 @@ def call_guidance(prompt_template, output_vars, input_vars=None, guidance_kwargs
 Example 4
 Below is a Python block of code without docstrings or with incomplete docstrings:
 ###CodeToFix:
-{{input}}
+{{function_header}}
+{{function_body}}
 
 ###Task: Add docstrings to the code block above.
 ###FixedCode:
-{{gen 'output' temperature=0.1 max_tokens=500 stop='###Done'}}
+{{function_header}}
+    \"\"\"{{gen 'description' temperature=0.1 max_tokens=500 stop='.'}}
+    {{gen 'parameters' temperature=0.1 max_tokens=500 stop='Returns:'}}
+    {{gen 'returns' temperature=0.1 max_tokens=500 stop='###Done'}}
 """,
     guidance_kwargs={},
-    input_vars=["input"],
-    output_vars=["output"],
+    input_vars=["function_header", "function_body"],
+    output_vars=["description", "parameters", "returns"],
 )
 

@@ -46,7 +46,9 @@ def read_root(command, request: Request):
     keys_difference = set(prompt_to_apply.input_vars) - set(extracted_input.keys())
 
     if keys_difference:
-        raise HTTPException(status_code=500, detail=f"Missing input keys for the prompt: {keys_difference}")
+        error_msg = f"Missing input keys for the prompt: {keys_difference}"
+        logger.error(error_msg)
+        raise HTTPException(status_code=500, detail=error_msg)
 
 
     logger.info("Loaded command: '%s'", command_to_apply)
@@ -55,12 +57,12 @@ def read_root(command, request: Request):
     result = call_guidance(
         prompt_template=prompt_to_apply.prompt_template,
         input_vars=extracted_input,
-        output_vars=["output"],
+        output_vars=prompt_to_apply.output_vars,
         guidance_kwargs={}
     )
+    logger.info("LLM output: '%s'", result)
 
     result = result["output"]
-    logger.info("LLM output: '%s'", result)
     if MAGIC_STOP_STRING in result:
         result = result.split(MAGIC_STOP_STRING)[0]
 
