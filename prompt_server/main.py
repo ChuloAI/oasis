@@ -35,27 +35,31 @@ def read_root(command, request: Request):
     received_code = request.data
     try:
         command_to_apply = commands_mapping[command]
-        logger.info("Loaded prompt: '%s'", command_to_apply.prompt)
+        logger.info("Loaded command: '%s'", command_to_apply)
 
     except KeyError:
         raise HTTPException(status_code=404, detail=f"Command not supported: {command}")
 
-    extracted_input = command_to_apply.input_extractor(received_code)
+    prompt_to_apply, extracted_input = command_to_apply.prompt_picker(received_code)
     logger.info("Extracted input: %s", extracted_input)
+    logger.info("Chosen prompt: %s", prompt_to_apply)
 
-    keys_difference = set(command_to_apply.prompt.input_vars) - set(extracted_input.keys())
+    keys_difference = set(prompt_to_apply.input_vars) - set(extracted_input.keys())
 
     if keys_difference:
         raise HTTPException(status_code=500, detail=f"Missing input keys for the prompt: {keys_difference}")
 
 
+    logger.info("Loaded command: '%s'", command_to_apply)
+
     logger.info("Calling LLM...")
     result = call_guidance(
-        prompt_template=command_to_apply.prompt.prompt_template,
+        prompt_template=prompt_to_apply.prompt_template,
         input_vars=extracted_input,
         output_vars=["output"],
         guidance_kwargs={}
     )
+
 
 
     result = result["output"]

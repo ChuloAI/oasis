@@ -1,3 +1,4 @@
+from codegen_guidance_prompts.function_add_doc_string import function_doc_string_guidance_prompt
 from codegen_guidance_prompts.add_doc_string import doc_string_guidance_prompt
 from codegen_guidance_prompts.add_type_hints import ADD_TYPE_HINTS
 from codegen_guidance_prompts.custom_prompt import CUSTOM_PROMPT

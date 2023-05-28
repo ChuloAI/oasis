@@ -1,17 +1,58 @@
+import logging
+import ast
+import abc
 from dataclasses import dataclass
 
 from prompts_interface import PromptModuleInterface
 from guidance_prompt import GuidancePrompt
-from typing import Dict, Callable
+from typing import Dict, Callable, Tuple
+
+
+logger = logging.getLogger("uvicorn")
+
 
 @dataclass
 class Command:
-    prompt: GuidancePrompt
-    input_extractor: Callable[[str], Dict[str, str]]
+    prompt: Dict[str, GuidancePrompt]
 
 
-def extract_docstring_command_input(input_: str) -> Dict[str, str]:
-    return {"input": input_}
+    @abc.abstractclassmethod
+    def prompt_picker(input_: str) -> Tuple[GuidancePrompt, Dict[str, str]]:
+        raise NotImplementedError()
+
+
+class DocStringCommand(Command):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args,**kwargs)
+
+
+    def prompt_picker(self, input_: str) -> Tuple[GuidancePrompt, Dict[str, str]]:
+        parsed = None
+        is_function = False
+        try:
+            parsed = ast.parse(input_)
+            function_def = parsed.body[0]
+            if isinstance(function_def, ast.FunctionDef):
+                is_function = True
+        except Exception:
+            pass
+
+        if parsed:
+            logger.info("Parsed code: %s", parsed.body)
+
+            if is_function:
+                logger.info("Detected function")
+                parts = input_.split(":\n")
+                logger.info("Broke into parts: %s", parts)
+                if len(parts) == 2:
+                    function_header = parts[0] + ":\n"
+                    function_body = parts[1]
+                    logger.info("Found function header and body")
+                    return self.prompt["function_prompt"], {"header": function_header, "body": function_body}
+        
+        logger.warn("Failed to parse code, falling back to generic prompt")
+
+        return self.prompt["generic_prompt"], {"input": input_}
 
 
 
@@ -25,9 +66,11 @@ def build_command_mapping(prompt_module: PromptModuleInterface):
     Returns:
     dict: The mapping of commands to their corresponding prompts.
     """
-    add_docstring_command = Command(
-        prompt=prompt_module.doc_string_guidance_prompt,
-        input_extractor=extract_docstring_command_input,
+    add_docstring_command = DocStringCommand(
+        prompt={
+            "generic_prompt": prompt_module.doc_string_guidance_prompt,
+            "function_prompt": prompt_module.function_doc_string_guidance_prompt
+        }
     )
 
 
