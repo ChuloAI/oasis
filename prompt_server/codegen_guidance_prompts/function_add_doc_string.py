@@ -116,7 +116,7 @@ Below is a Python block of code without docstrings or with incomplete docstrings
 {{function_header}}
     \"\"\"{{gen 'description' temperature=0.1 max_tokens=500 stop='.'}}
     {{gen 'parameters' temperature=0.1 max_tokens=500 stop='Returns:'}}
-    {{gen 'returns' temperature=0.1 max_tokens=500 stop='###Done'}}
+    {{gen 'returns' temperature=0.1 max_tokens=500 stop='\"\"\"'}}
 """,
     guidance_kwargs={},
     input_vars=["function_header", "function_body"],

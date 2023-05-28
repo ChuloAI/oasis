@@ -16,16 +16,19 @@ class Command:
 
 
     @abc.abstractclassmethod
-    def prompt_picker(input_: str) -> Tuple[GuidancePrompt, Dict[str, str]]:
+    def prompt_picker(self, input_: str) -> Tuple[str, GuidancePrompt, Dict[str, str]]:
         raise NotImplementedError()
 
+    @abc.abstractclassmethod
+    def output_extractor(self, prompt_key: str, extracted_input: Dict[str, str], result: Dict[str, str]) -> str:
+        raise NotImplementedError()
 
 class DocStringCommand(Command):
     def __init__(self, *args, **kwargs):
         super().__init__(*args,**kwargs)
 
 
-    def prompt_picker(self, input_: str) -> Tuple[GuidancePrompt, Dict[str, str]]:
+    def prompt_picker(self, input_: str) -> Tuple[str, GuidancePrompt, Dict[str, str]]:
         is_function = "):\n" in input_
         if is_function:
             logger.info("Detected function")
@@ -37,29 +40,41 @@ class DocStringCommand(Command):
                 logger.info("Found function header and body")
 
                 prompt_key = "function_prompt"
-                return_value = self.prompt[prompt_key], {"function_header": function_header, "function_body": function_body}
+                return_value = prompt_key, self.prompt[prompt_key], {"function_header": function_header, "function_body": function_body}
         
         else:
             logger.warn("Failed to identify specific type of code block, falling back to generic prompt")
 
             prompt_key = "generic_prompt"
-            return_value = self.prompt[prompt_key], {"input": input_}
+            return_value = prompt_key, self.prompt[prompt_key], {"input": input_}
 
 
         logger.info("Chosen prompt: %s", prompt_key)
         return return_value
 
+    def output_extractor(self, prompt_key, extracted_input, result: Dict[str, str]) -> str:
+        if prompt_key == "generic_prompt":
+            return result["output"]
+        elif prompt_key == "function_prompt":
+            return (
+                extracted_input["function_header"]
+                + '    """'
+                + result["description"] 
+                + result["parameters"]
+                + result["returns"] 
+                + '"""\n'
+                + extracted_input["function_body"]
+            )
 
 
 def build_command_mapping(prompt_module: PromptModuleInterface):
     """
-    This function builds a mapping of commands to their corresponding prompt.
-    
+    This function builds a mapping of commands to their corresponding functions
     Parameters:
     prompt_module (PromptModuleInterface): The prompt module to use for the guidance.
     
     Returns:
-    dict: The mapping of commands to their corresponding prompts.
+    dict: The mapping of commands to their corresponding functions.
     """
     add_docstring_command = DocStringCommand(
         prompt={

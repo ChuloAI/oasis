@@ -40,7 +40,7 @@ def read_root(command, request: Request):
     except KeyError:
         raise HTTPException(status_code=404, detail=f"Command not supported: {command}")
 
-    prompt_to_apply, extracted_input = command_to_apply.prompt_picker(received_code)
+    prompt_key, prompt_to_apply, extracted_input = command_to_apply.prompt_picker(received_code)
     logger.info("Extracted input: %s", extracted_input)
 
     keys_difference = set(prompt_to_apply.input_vars) - set(extracted_input.keys())
@@ -61,8 +61,9 @@ def read_root(command, request: Request):
         guidance_kwargs={}
     )
     logger.info("LLM output: '%s'", result)
+    
+    result = command_to_apply.output_extractor(prompt_key, extracted_input, result)
 
-    result = result["output"]
     if MAGIC_STOP_STRING in result:
         result = result.split(MAGIC_STOP_STRING)[0]
 
