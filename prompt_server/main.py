@@ -42,7 +42,6 @@ def read_root(command, request: Request):
 
     prompt_to_apply, extracted_input = command_to_apply.prompt_picker(received_code)
     logger.info("Extracted input: %s", extracted_input)
-    logger.info("Chosen prompt: %s", prompt_to_apply)
 
     keys_difference = set(prompt_to_apply.input_vars) - set(extracted_input.keys())
 
@@ -59,8 +58,6 @@ def read_root(command, request: Request):
         output_vars=["output"],
         guidance_kwargs={}
     )
-
-
 
     result = result["output"]
     logger.info("LLM output: '%s'", result)

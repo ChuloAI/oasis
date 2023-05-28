@@ -27,32 +27,28 @@ class DocStringCommand(Command):
 
 
     def prompt_picker(self, input_: str) -> Tuple[GuidancePrompt, Dict[str, str]]:
-        parsed = None
-        is_function = False
-        try:
-            parsed = ast.parse(input_)
-            function_def = parsed.body[0]
-            if isinstance(function_def, ast.FunctionDef):
-                is_function = True
-        except Exception:
-            pass
+        is_function = "):\n" in input_
+        if is_function:
+            logger.info("Detected function")
+            parts = input_.split(":\n")
+            logger.info("Broke into parts: %s", parts)
+            if len(parts) == 2:
+                function_header = parts[0] + ":\n"
+                function_body = parts[1]
+                logger.info("Found function header and body")
 
-        if parsed:
-            logger.info("Parsed code: %s", parsed.body)
-
-            if is_function:
-                logger.info("Detected function")
-                parts = input_.split(":\n")
-                logger.info("Broke into parts: %s", parts)
-                if len(parts) == 2:
-                    function_header = parts[0] + ":\n"
-                    function_body = parts[1]
-                    logger.info("Found function header and body")
-                    return self.prompt["function_prompt"], {"header": function_header, "body": function_body}
+                prompt_key = "function_prompt"
+                return_value = self.prompt[prompt_key], {"header": function_header, "body": function_body}
         
-        logger.warn("Failed to parse code, falling back to generic prompt")
+        else:
+            logger.warn("Failed to identify specific type of code block, falling back to generic prompt")
 
-        return self.prompt["generic_prompt"], {"input": input_}
+            prompt_key = "generic_prompt"
+            return_value = self.prompt[prompt_key], {"input": input_}
+
+
+        logger.info("Chosen prompt: %s", prompt_key)
+        return return_value
 
 
 
