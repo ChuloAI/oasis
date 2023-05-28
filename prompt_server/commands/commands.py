@@ -25,9 +25,14 @@ def build_command_mapping(prompt_module: PromptModuleInterface):
     Returns:
     dict: The mapping of commands to their corresponding prompts.
     """
-    
+    add_docstring_command = Command(
+        prompt=prompt_module.doc_string_guidance_prompt,
+        input_extractor=extract_docstring_command_input,
+    )
+
+
     commands_mapping = {
-        "add_docstring": prompt_module.doc_string_guidance_prompt,
+        "add_docstring": add_docstring_command,
         # "add_type_hints": ADD_TYPE_HINTS,
         # "fix_syntax_error": FIX_SYNTAX_ERROR,
         # "custom_prompt": CUSTOM_PROMPT
