@@ -2,6 +2,7 @@ import logging
 import abc
 from dataclasses import dataclass
 
+from custom_parser import function_parser, FailedToParseFunctionException
 from prompts_interface import PromptModuleInterface
 from guidance_prompt import GuidancePrompt
 from typing import Dict, Tuple
@@ -23,28 +24,27 @@ class Command:
     def output_extractor(self, prompt_key: str, extracted_input: Dict[str, str], result: Dict[str, str]) -> str:
         raise NotImplementedError()
 
+
+
 class DocStringCommand(Command):
     def __init__(self, *args, **kwargs):
         super().__init__(*args,**kwargs)
 
 
     def prompt_picker(self, input_: str) -> Tuple[str, GuidancePrompt, Dict[str, str]]:
-        is_function = "):\n" in input_
         prompt_key = "None"
-        if is_function and len(input_.split(":\n")) == 2:
-            logger.info("Detected function")
-            parts = input_.split(":\n")
-            logger.info("Broke into parts: %s", parts)
-            function_header = parts[0] + ":\n"
-            function_body = parts[1]
-            logger.info("Found function header and body")
-
+        try:
+            function_header, function_body, leading_indentation, indentation_type = function_parser(input_)
             prompt_key = "function_prompt"
-            return_value = prompt_key, self.prompt[prompt_key], {"function_header": function_header, "function_body": function_body}
+            return_value = prompt_key, self.prompt[prompt_key], {
+                "function_header": function_header,
+                "function_body": function_body,
+                "leading_indentation": leading_indentation,
+                "indentation_type": indentation_type
+            }
 
-        else:
+        except (FailedToParseFunctionException):
             logger.warn("Failed to identify specific type of code block, falling back to generic prompt")
-
             prompt_key = "generic_prompt"
             return_value = prompt_key, self.prompt[prompt_key], {"input": input_}
 
@@ -56,13 +56,24 @@ class DocStringCommand(Command):
         if prompt_key == "generic_prompt":
             return result["output"]
         elif prompt_key == "function_prompt":
+            ind = extracted_input["leading_indentation"]
+
+            header_indentation = ind
+            offset = ""
+            indentation_type = extracted_input["indentation_type"]
+            offset = "    "
+            if indentation_type:
+                offset = indentation_type
+
+            body_indentation = ind + offset
+
             return (
-                extracted_input["function_header"]
-                + '    """'
-                + result["description"] 
-                + result["parameters"]
-                + result["returns"] 
-                + '"""\n'
+                header_indentation + extracted_input["function_header"] + "\n"
+                + body_indentation + '"""'
+                + body_indentation + result["description"] + "\n"
+                + body_indentation + result["parameters"] 
+                + body_indentation + result["returns"] + "\n"
+                + body_indentation + '"""\n\n'
                 + extracted_input["function_body"]
             )
 

@@ -113,13 +113,13 @@ Below is a Python block of code without docstrings or with incomplete docstrings
 
 ###Task: Add docstrings to the code block above.
 ###FixedCode:
-{{function_header}}
-    \"\"\"{{gen 'description' temperature=0.1 max_tokens=500 stop='.'}}
-    {{gen 'parameters' temperature=0.1 max_tokens=500 stop='Returns:'}}
-    {{gen 'returns' temperature=0.1 max_tokens=500 stop='\"\"\"'}}
-""",
+    {{leading_indentation}}{{function_header}}
+    \"\"\"{{gen 'description' temperature=0.1 max_tokens=128 stop='.'}}
+{{gen 'parameters' temperature=0.1 max_tokens=128 stop='Returns:'}}
+{{gen 'returns' temperature=0.1 max_tokens=128 stop='\"\"\"'}}
+    """,
     guidance_kwargs={},
-    input_vars=["function_header", "function_body"],
+    input_vars=["function_header", "function_body", "leading_indentation"],
     output_vars=["description", "parameters", "returns"],
 )
 
