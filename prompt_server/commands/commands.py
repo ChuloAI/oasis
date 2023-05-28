@@ -48,7 +48,6 @@ class DocStringCommand(Command):
             prompt_key = "generic_prompt"
             return_value = prompt_key, self.prompt[prompt_key], {"input": input_}
 
-
         logger.info("Chosen prompt: %s", prompt_key)
         return return_value
 
