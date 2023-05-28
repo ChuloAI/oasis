@@ -67,15 +67,53 @@ class DocStringCommand(Command):
 
             body_indentation = ind + offset
 
-            return (
-                header_indentation + extracted_input["function_header"] + "\n"
-                + body_indentation + '"""'
-                + body_indentation + result["description"] + "\n"
-                + body_indentation + result["parameters"] 
-                + body_indentation + result["returns"] + "\n"
-                + body_indentation + '"""\n\n'
-                + extracted_input["function_body"]
-            )
+            try:
+                parameters = result["parameters"].strip().split("\n")
+            except (KeyError, ValueError):
+                parameters = []
+
+
+            try:
+                returns = result["returns"].strip().split("\n")
+            except (KeyError, ValueError):
+                returns = []
+
+
+            parameters_string = ""
+            if parameters:
+                parameters_string = body_indentation + "Parameters: \n"
+                for param in parameters:
+                    parameters_string += f"{body_indentation}{indentation_type}{param.lstrip().strip()}\n"
+
+                parameters_string += "\n"
+
+            logger.info("Docstring parameters: %s", parameters_string)
+
+            returns_string = ""
+            if returns:
+                returns_string = body_indentation + "Returns: \n"
+                for return_ in returns:
+                    returns_string += f"{body_indentation}{indentation_type}{return_.lstrip().strip()}\n"
+                returns_string += "\n"
+
+            logger.info("Docstring returns: %s", returns_string)
+
+            code_with_docstring = (header_indentation + extracted_input["function_header"] + "\n") 
+            code_with_docstring += (body_indentation + '"""')
+            code_with_docstring += (result["description"].lstrip().strip() + "\n\n")
+
+            logger.info("Header with description: %s", code_with_docstring)
+            if parameters_string:
+                code_with_docstring += (parameters_string)
+            if returns_string:
+                code_with_docstring += (returns_string)
+
+
+            code_with_docstring += (body_indentation + '"""\n\n')
+                
+            code_with_docstring += extracted_input["function_body"]
+            logger.info("Generated code with docstring: %s", code_with_docstring)
+            return code_with_docstring
 
 
 def build_command_mapping(prompt_module: PromptModuleInterface):
