@@ -20,6 +20,13 @@ to explore the library to it's fullest.
 
 `git clone: https://github.com/paolorechia/oasis@v0.1.3`
 
+2. Start the FastAPI server in `prompt_server`:
+```
+    cd prompt_server
+    pip install -r requirements.txt
+    ./start_uvicorn.sh
+```
+
 
 ## If using main
 `git clone: https://github.com/paolorechia/oasis@main`
