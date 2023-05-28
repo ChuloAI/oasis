@@ -21,7 +21,8 @@ app = FastAPI()
 prompts_module = codegen_guidance_prompts
 commands_mapping = build_command_mapping(prompts_module)
 
-
+# Magic constants add compatibility with WizardLM model
+# Not required with codegen variants
 MAGIC_STOP_STRING = "###Done"
 MAGIC_SPLIT_STRING = "###FixedCode"
 MAGIC_PYTHON_MD_START = "```python"
