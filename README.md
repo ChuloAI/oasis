@@ -55,7 +55,16 @@ This server is quite heavy on dependencies, and expects that you can run PyTorch
 ### Local Codegen Models on VSCode
 How does it work?
 
-TODO: add proper explanation here 
+The Oasis backend receives a pair of command/selected code from the VSCode extension frontend, and uses this input to:
+
+1. Parse the input code using the `ast` module (https://docs.python.org/3/library/ast.html)
+2. Find specific code parts from the parsed code
+3. Choose a guidance prompt to apply
+4. Applies the guidance prompt, delegating the LLM call to the second backend service: `guidance server`
+5. Parses the result and forms an adequate response back to the frontend.
+
+
+![Flow of a command execution](/oasis_architecture.jpg?raw=true "Basic Flow")
 
 ### Changing Models
 There is currently no exposed config. If you want to change the loaded model, change the source code in
