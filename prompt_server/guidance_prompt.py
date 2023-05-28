@@ -1,6 +1,6 @@
 from typing import Dict
-
 from dataclasses import dataclass
+
 @dataclass
 class GuidancePrompt:
     prompt_template: str

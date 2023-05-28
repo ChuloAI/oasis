@@ -14,7 +14,7 @@ def print_hello_world():
 ###Task: Add docstrings to the code block above.
 ###FixedCode:
 def print_hello_world():
-    '''This functions print the string 'hello_world' to the standard output.'''
+    \"\"\"This functions print the string 'hello_world' to the standard output.\"\"\"
 
 ###Done
 
@@ -27,7 +27,7 @@ def sum_2(x, y):
 
 ###FixedCode:
 def sum_2(x, y):
-    '''This functions receives two parameters and returns the sum.
+    \"\"\"This functions receives two parameters and returns the sum.
     
     Parameters:
         int: x - first number to sum
@@ -35,7 +35,7 @@ def sum_2(x, y):
 
     Returns:
         int: sum of the two given integers
-    '''
+    \"\"\"
     return x + y
 
 ###Done
@@ -68,7 +68,7 @@ def call_guidance(prompt_template, output_vars, input_vars=None, guidance_kwargs
 
 ###FixedCode:
 def call_guidance(prompt_template, output_vars, input_vars=None, guidance_kwargs=None):
-    '''
+    \"\"\"
     This function calls a guidance API with the given parameters and returns the response.
     
     Parameters:
@@ -79,7 +79,7 @@ def call_guidance(prompt_template, output_vars, input_vars=None, guidance_kwargs
     
     Returns:
     dict: The response from the guidance API.
-    '''
+    \"\"\"
 
     if input_vars is None:
         input_vars = {}
