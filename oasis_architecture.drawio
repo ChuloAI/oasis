@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-05-28T15:49:30.909Z" agent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/113.0" etag="rB6-ZMg0DPzIVpmJhcj6" version="21.3.5" type="github">
+<mxfile host="app.diagrams.net" modified="2023-05-28T15:50:57.411Z" agent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:109.0) Gecko/20100101 Firefox/113.0" etag="_r3g4CGp27x_MlD2RtQV" version="21.3.5" type="github">
   <diagram name="Page-1" id="9O4NA4LrLLXZkWkuDNmq">
     <mxGraphModel dx="1360" dy="795" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -90,6 +90,12 @@
             <mxPoint x="70" y="240" as="sourcePoint" />
             <mxPoint x="140" y="240" as="targetPoint" />
           </mxGeometry>
+        </mxCell>
+        <mxCell id="WASM8jpiA2cJ4sVB-gKM-23" value="Sends selected code and chosen command to prompt server" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="220" y="140" width="180" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="WASM8jpiA2cJ4sVB-gKM-24" value="Chooses a dynamic guidance prompt and calls the guidance server" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="440" y="140" width="180" height="70" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
