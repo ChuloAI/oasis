@@ -2,14 +2,14 @@
   "name": "oasis-llamas",
   "displayName": "oasis-llamas",
   "description": "An extension to connect to local llamas",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "engines": {
     "vscode": "^1.71.0"
   },
   "categories": [
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": ["onStartupFinished"],
   "repository": {
     "url": "https://github.com/paolorechia/oasis"
   },
