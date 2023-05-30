@@ -4,8 +4,6 @@ This library is exposed as a VSCode plugin, and adds code-generation commands on
 
 NOTE: main is currently unstable, developing the use of guidance prompts (see guidance library: https://github.com/microsoft/guidance)
 
-Version v0.1.4 will be released soon, which uses guidance with Salesforce Codegen models. This is still in development, highly experimental.
-
 **WARNING**: Only add docstring to functions command is somewhat stable at the moment.
 
 ## If using v0.1.3
@@ -14,44 +12,55 @@ If you want to use text-generation-webui with simpler prompts, use v0.1.3. This 
 
 1. Install text-generation-web-ui, start it with API: https://github.com/oobabooga/text-generation-webui
 
-`git clone https://github.com/paolorechia/oasis@v0.1.3`
+```bash
+git clone https://github.com/paolorechia/oasis
+cd oasis
+git checkout v0.1.3
+```
 
 2. Start the FastAPI server in `prompt_server`:
+
 ```
-    cd prompt_server
-    pip install -r requirements.txt
-    ./start_uvicorn.sh
+cd prompt_server
+pip install -r requirements.txt
+./start_uvicorn.sh
 ```
 
 ## If using v0.1.5 or main
 ### Installation
 
 Main:
-`git clone https://github.com/paolorechia/oasis@main`
+`git clone https://github.com/paolorechia/oasis`
 
 Or v0.1.5:
 
-`git clone https://github.com/paolorechia/oasis@v0.1.5`
-
+```bash
+git clone https://github.com/paolorechia/oasis
+cd oasis
+git checkout v0.1.3
+```
 
 #### Running on CPU
 By default, it will install PyTorch to run with CPU.
 
 1. Start the FastAPI server in `guidance_server`:
+
 ```
-    cd guidance_server
-    pip install -r requirements.txt
-    ./start_uvicorn.sh
+cd guidance_server
+pip install -r requirements.txt
+./start_uvicorn.sh
 ```
 
 This server is quite heavy on dependencies. 
 
 2. Start the FastAPI server in `prompt_server`:
+
 ```
-    cd prompt_server
-    pip install -r requirements.txt
-    ./start_uvicorn.sh
+cd prompt_server
+pip install -r requirements.txt
+./start_uvicorn.sh
 ```
+
 3. Install VSCode plugin called 'oasis-llamas'
 4. Use it!
 
