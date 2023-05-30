@@ -108,7 +108,7 @@ class DocStringCommand(Command):
                 code_with_docstring += (returns_string)
 
 
-            code_with_docstring += (body_indentation + '"""\n\n')
+            code_with_docstring += (body_indentation + '"""')
                 
             code_with_docstring += extracted_input["function_body"]
             logger.info("Generated code with docstring: %s", code_with_docstring)
