@@ -66,6 +66,8 @@ The Oasis backend receives a pair of command/selected code from the VSCode exten
 
 ![Flow of a command execution](/oasis_architecture.jpg?raw=true "Basic Flow")
 
+You can read more about it in Medium: https://medium.com/@paolorechia/building-oasis-a-local-code-generator-tool-using-open-source-models-and-microsofts-guidance-aef54c3e2840
+
 ### Changing Models
 There is currently no exposed config. If you want to change the loaded model, change the source code in
 `guidance_server/main.py`, in lines 35-39 you will find something like:

@@ -38,7 +38,14 @@ model = "Salesforce/codegen-350m-mono"
 # model = "Salesforce/codegen-6b-mono"
 # model = "Salesforce/codegen-16B-mono"
 
-llama = guidance.llms.Transformers(model, quantization_config=nf4_config, revision="main")
+use_gpu_4bit = False
+
+model_config={"revision": "main"}
+if use_gpu_4bit:
+    model_config["quantization_config"] = nf4_config
+
+llama = guidance.llms.Transformers(model, **model_config)
+
 print("Server loaded!")
 
 

@@ -63,6 +63,7 @@ async function useoasis(command: string) {
 };
 
 export function activate(context: vscode.ExtensionContext) {
+	console.log("Activating")
 	const commands = [
 		["addDocstring", "add_docstring"],
 		["addTypeHints", "add_type_hints"],
