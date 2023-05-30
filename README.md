@@ -121,7 +121,8 @@ This plugin works even with the 350m-mono model version! That's currently only p
 Although do expect better results with bigger models.
 
 ### Add docstrings to block of code
-![Docstring demo](docstring_example.gif)
+![Docstring demo](https://github.com/paolorechia/oasis/assets/5386983/39110f0f-79b1-44cc-aa42-d793fc1eb0f8)
+
 
 **Note:** for better results, select exactly ONE block of function to add docstring too, with NO syntax errors.
 
