@@ -14,7 +14,7 @@ If you want to use text-generation-webui with simpler prompts, use v0.1.3. This 
 
 1. Install text-generation-web-ui, start it with API: https://github.com/oobabooga/text-generation-webui
 
-`git clone: https://github.com/paolorechia/oasis@v0.1.3`
+`git clone https://github.com/paolorechia/oasis@v0.1.3`
 
 2. Start the FastAPI server in `prompt_server`:
 ```
@@ -27,12 +27,15 @@ If you want to use text-generation-webui with simpler prompts, use v0.1.3. This 
 ### Installation
 
 Main:
-`git clone: https://github.com/paolorechia/oasis@main`
+`git clone https://github.com/paolorechia/oasis@main`
 
 Or v0.1.5:
 
-`git clone: https://github.com/paolorechia/oasis@v0.1.5`
+`git clone https://github.com/paolorechia/oasis@v0.1.5`
 
+
+#### Running on CPU
+By default, it will install PyTorch to run with CPU.
 
 1. Start the FastAPI server in `guidance_server`:
 ```
@@ -41,7 +44,7 @@ Or v0.1.5:
     ./start_uvicorn.sh
 ```
 
-This server is quite heavy on dependencies. By default, it will install PyTorch to run with CPU.
+This server is quite heavy on dependencies. 
 
 2. Start the FastAPI server in `prompt_server`:
 ```
@@ -55,7 +58,7 @@ This server is quite heavy on dependencies. By default, it will install PyTorch 
 
 #### Running on GPU
 
-There's no automated installation to set it up with GPU, I recommend the following steps for an NVIDIA card:
+There's no automated installation to set it up with GPU - when setting up the `guidance_server` above, I recommend the following steps for an NVIDIA card.
 
 1. Remove torch from requirements.txt
 2. If needed, install NVIDIA Developer Toolkit: https://developer.nvidia.com/cuda-11-8-0-download-archive
