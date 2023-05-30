@@ -31,8 +31,16 @@ def _get_leading_indentation(input_code_str: str) -> str:
 
 def _get_indentation_type(input_code_str: str) -> str:
     try:
-        second_string = input_code_str.split("def")[1]
-        second_line = second_string.splitlines()[1]
+        try:
+            second_string = input_code_str.split("def")[1]
+        except (KeyError, IndexError):
+            second_string = input_code_str
+
+        try:
+            second_line = second_string.splitlines()[1]
+        except (IndexError):
+            second_line = second_string
+
         whitespaces = ""
         for ch in second_line:
             if ch == "\t" or ch == " ":
