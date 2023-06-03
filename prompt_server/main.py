@@ -55,6 +55,7 @@ def read_root(command, request: Request):
 
     result = andromeda.run_guidance_prompt(
         guidance_prompt=prompt_to_apply,
+        input_vars=extracted_input
     )
     logger.info("LLM output: '%s'", result)
     
