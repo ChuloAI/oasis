@@ -19,7 +19,10 @@ services:
     stop_signal: SIGINT
     environment:
       MODEL_PATH: /models/codegen-350M-mono
+      GUIDANCE_URL: http://guidance:9000
     restart: unless-stopped
+    networks:
+      - oasis
 
   guidance:
     image: paolorechia/guidance_server:cpu-0.1
@@ -38,4 +41,9 @@ services:
     environment:
       MODEL_PATH: /models/codegen-350M-mono
     restart: unless-stopped
-    
+    networks:
+      - oasis
+
+networks:
+  oasis:
+      name: oasis-network

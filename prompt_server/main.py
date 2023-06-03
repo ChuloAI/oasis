@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException
+import os
 import logging
 import codegen_guidance_prompts
 import wizard_lm_guidance_prompts
@@ -18,7 +19,7 @@ class Request(BaseModel):
 app = FastAPI()
 
 
-andromeda = AndromedaChain(guidance_url="http://0.0.0.0:9090")
+andromeda = AndromedaChain(guidance_url=os.getenv("GUIDANCE_URL", "http://0.0.0.0:9090"))
 prompts_module = codegen_guidance_prompts
 commands_mapping = build_command_mapping(prompts_module)
 
