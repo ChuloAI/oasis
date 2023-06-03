@@ -18,7 +18,7 @@ class Request(BaseModel):
 app = FastAPI()
 
 
-andromeda = AndromedaChain()
+andromeda = AndromedaChain(guidance_url="http://0.0.0.0:9090")
 prompts_module = codegen_guidance_prompts
 commands_mapping = build_command_mapping(prompts_module)
 
@@ -53,10 +53,7 @@ def read_root(command, request: Request):
     logger.info("Calling LLM...")
 
     result = andromeda.run_guidance_prompt(
-        prompt_template=prompt_to_apply.prompt_template,
-        input_vars=extracted_input,
-        output_vars=prompt_to_apply.output_vars,
-        guidance_kwargs={}
+        guidance_prompt=prompt_to_apply,
     )
     logger.info("LLM output: '%s'", result)
     

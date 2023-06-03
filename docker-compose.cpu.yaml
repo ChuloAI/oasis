@@ -5,7 +5,7 @@ services:
       context: prompt_server/
       dockerfile: Dockerfile
     ports:
-      - "9090:9090"
+      - "9000:9000"
     volumes:
       - ./models:/models
       - ./prompt_server:/code
@@ -24,7 +24,7 @@ services:
   guidance:
     image: paolorechia/guidance_server:cpu-0.1
     ports:
-      - "9000:9000"
+      - "9090:9000"
     volumes:
       - ./models:/models
     # Add the "labels" section to set the container to remove itself on shutdown
@@ -38,3 +38,4 @@ services:
     environment:
       MODEL_PATH: /models/codegen-350M-mono
     restart: unless-stopped
+    
