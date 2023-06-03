@@ -31,7 +31,7 @@ class DocStringCommand(Command):
         super().__init__(*args,**kwargs)
 
 
-    def prompt_picker(self, input_: str) -> Tuple[str, AndromedaPrompt, AndromedaResponse]:
+    def prompt_picker(self, input_: str) -> Tuple[str, AndromedaPrompt, Dict[str, str]]:
         prompt_key = "None"
         try:
             function_header, function_body, leading_indentation, indentation_type = function_parser(input_)
@@ -57,21 +57,17 @@ class DocStringCommand(Command):
         elif prompt_key == "function_prompt":
             result = response.result_vars
             ind = extracted_input["leading_indentation"]
+            indentation_type = extracted_input["indentation_type"]
 
             header_indentation = ind
-            offset = ""
-            indentation_type = extracted_input["indentation_type"]
-            offset = "    "
-            if indentation_type:
-                offset = indentation_type
-
-            body_indentation = ind + offset
+            body_indentation = ind
+            if not body_indentation:
+                body_indentation = indentation_type
 
             try:
                 parameters = result["parameters"].strip().split("\n")
             except (KeyError, ValueError):
                 parameters = []
-
 
             try:
                 returns = result["returns"].strip().split("\n")
@@ -81,7 +77,7 @@ class DocStringCommand(Command):
 
             parameters_string = ""
             if parameters:
-                parameters_string = body_indentation + "Parameters: \n"
+                parameters_string = header_indentation + body_indentation + "Parameters: \n"
                 for param in parameters:
                     parameters_string += f"{body_indentation}{indentation_type}{param.lstrip().strip()}\n"
 
@@ -91,16 +87,16 @@ class DocStringCommand(Command):
 
             returns_string = ""
             if returns:
-                returns_string = body_indentation + "Returns: \n"
+                returns_string = header_indentation + body_indentation + "Returns: \n"
                 for return_ in returns:
                     returns_string += f"{body_indentation}{indentation_type}{return_.lstrip().strip()}\n"
                 returns_string += "\n"
 
             logger.info("Docstring returns: %s", returns_string)
 
-            code_with_docstring = (header_indentation + extracted_input["function_header"] + "\n") 
-            code_with_docstring += (body_indentation + '"""')
-            code_with_docstring += (result["description"].lstrip().strip() + "\n\n")
+            code_with_docstring = (extracted_input["function_header"] + "\n") 
+            code_with_docstring += (header_indentation + body_indentation + '"""')
+            code_with_docstring += (result["description"].lstrip().strip() + ".\n\n")
 
             logger.info("Header with description: %s", code_with_docstring)
             if parameters_string:
@@ -109,7 +105,7 @@ class DocStringCommand(Command):
                 code_with_docstring += (returns_string)
 
 
-            code_with_docstring += (body_indentation + '"""')
+            code_with_docstring += (header_indentation + body_indentation + '"""')
                 
             code_with_docstring += extracted_input["function_body"]
             logger.info("Generated code with docstring: %s", code_with_docstring)

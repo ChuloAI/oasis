@@ -4,11 +4,8 @@ from typing import Tuple
 
 USED_BODY_CHARS_TO_SPLIT = 3
 
-def _extract_function_header(fun_code: ast.FunctionDef) -> str:
-    full = ast.unparse(fun_code)
-    body = ast.unparse(fun_code.body)
-    print(f"Parsed body:", body)
-    return full.split(body[0:USED_BODY_CHARS_TO_SPLIT])[0].strip()
+def _extract_function_header(input_code_str: str) -> str:
+    return input_code_str.split(":\n")[0] + ":"
 
 def _extract_function_body(function_header: str, input_code_str: str) -> str:
     print(f"input code : '{input_code_str}'")
@@ -97,7 +94,7 @@ def function_parser(input_code_str: str) -> Tuple[str, str, str]:
     if not isinstance(first_node, ast.FunctionDef):
         raise FailedToParseFunctionException(f"Parsed type is not a function: '{type(first_node)}'")
     
-    function_header = _extract_function_header(first_node)
+    function_header = _extract_function_header(input_code_str)
     function_body = _extract_function_body(function_header, input_code_str)
 
     return function_header, function_body, leading_indentation, indentation_type
