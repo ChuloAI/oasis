@@ -1,6 +1,7 @@
-from guidance_prompt import GuidancePrompt
+from andromeda_chain import AndromedaPrompt
 
-function_doc_string_guidance_prompt = GuidancePrompt(
+function_doc_string_guidance_prompt = AndromedaPrompt(
+    name="function_add_doc_string",
     prompt_template="""
 def print_hello_world():
     print("hello_world")

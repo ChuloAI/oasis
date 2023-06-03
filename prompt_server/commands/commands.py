@@ -4,7 +4,7 @@ from dataclasses import dataclass
 
 from custom_parser import function_parser, FailedToParseFunctionException
 from prompts_interface import PromptModuleInterface
-from guidance_prompt import GuidancePrompt
+from andromeda_chain import AndromedaPrompt
 from typing import Dict, Tuple
 
 
@@ -13,11 +13,11 @@ logger = logging.getLogger("uvicorn")
 
 @dataclass
 class Command:
-    prompt: Dict[str, GuidancePrompt]
+    prompt: Dict[str, AndromedaPrompt]
 
 
     @abc.abstractclassmethod
-    def prompt_picker(self, input_: str) -> Tuple[str, GuidancePrompt, Dict[str, str]]:
+    def prompt_picker(self, input_: str) -> Tuple[str, AndromedaPrompt, Dict[str, str]]:
         raise NotImplementedError()
 
     @abc.abstractclassmethod
@@ -31,7 +31,7 @@ class DocStringCommand(Command):
         super().__init__(*args,**kwargs)
 
 
-    def prompt_picker(self, input_: str) -> Tuple[str, GuidancePrompt, Dict[str, str]]:
+    def prompt_picker(self, input_: str) -> Tuple[str, AndromedaPrompt, Dict[str, str]]:
         prompt_key = "None"
         try:
             function_header, function_body, leading_indentation, indentation_type = function_parser(input_)

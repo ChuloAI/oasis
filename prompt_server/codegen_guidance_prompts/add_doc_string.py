@@ -1,6 +1,7 @@
-from guidance_prompt import GuidancePrompt
+from andromeda_chain import AndromedaPrompt
 
-doc_string_guidance_prompt = GuidancePrompt(
+doc_string_guidance_prompt = AndromedaPrompt(
+    name="generic_add_doc_string",
     prompt_template="""You're an AI programmer with the task of helping improving the code quality.
 You receive code snippets each day with a problem. For instance, commonly they lack docstrings.
 You communicate your answer back over a specific protocol of adding a ###Done after each input question.

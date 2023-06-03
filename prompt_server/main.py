@@ -4,7 +4,7 @@ import codegen_guidance_prompts
 import wizard_lm_guidance_prompts
 
 from pydantic import BaseModel
-from guidance_client import call_guidance
+from andromeda_chain import AndromedaChain
 from commands.commands import build_command_mapping
 
 
@@ -18,6 +18,7 @@ class Request(BaseModel):
 app = FastAPI()
 
 
+andromeda = AndromedaChain()
 prompts_module = codegen_guidance_prompts
 commands_mapping = build_command_mapping(prompts_module)
 
@@ -51,7 +52,7 @@ def read_root(command, request: Request):
         logger.info("(%s): '%s'", key, item)
     logger.info("Calling LLM...")
 
-    result = call_guidance(
+    result = andromeda.run_guidance_prompt(
         prompt_template=prompt_to_apply.prompt_template,
         input_vars=extracted_input,
         output_vars=prompt_to_apply.output_vars,
