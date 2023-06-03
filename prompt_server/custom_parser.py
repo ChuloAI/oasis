@@ -16,12 +16,30 @@ def _extract_function_body(function_header: str, input_code_str: str) -> str:
     return input_code_str.split(function_header.strip())[1]
 
 def _get_leading_indentation(input_code_str: str) -> str:
+    """This function returns the leading indentation of the given code string
+
+    Parameters: 
+        input_code_str (str): The input code string to get the leading indentation of.
+
+    Returns: 
+        str: The leading indentation of the given code string.
+
+    """
     try:
         return input_code_str.split("def")[0]
     except (ValueError, IndexError):
         return ""
 
 def _get_indentation_type(input_code_str: str) -> str:
+    """This function receives a string and returns the indentation type
+
+    Parameters: 
+    input_code_str (str): The input code string
+
+    Returns: 
+    str: The indentation type
+
+    """
 
     try:
         try:
@@ -56,6 +74,15 @@ class FailedToParseFunctionException(Exception):
     pass
 
 def function_parser(input_code_str: str) -> Tuple[str, str, str]:
+    """acknowledges that the function is a function
+
+    Parameters: 
+        input_code_str (str): The input code string
+
+    Returns: 
+        Tuple[str, str, str]: The function header, function body, leading indentation, and indentation type
+
+    """
     leading_indentation = _get_leading_indentation(input_code_str)
     simple_indented_code = _remove_extra_indentation(input_code_str, leading_indentation)
     indentation_type = _get_indentation_type(input_code_str)
