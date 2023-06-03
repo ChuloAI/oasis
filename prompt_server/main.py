@@ -1,10 +1,11 @@
 from fastapi import FastAPI, HTTPException
+import os
 import logging
 import codegen_guidance_prompts
 import wizard_lm_guidance_prompts
 
 from pydantic import BaseModel
-from guidance_client import call_guidance
+from andromeda_chain import AndromedaChain
 from commands.commands import build_command_mapping
 
 
@@ -18,6 +19,7 @@ class Request(BaseModel):
 app = FastAPI()
 
 
+andromeda = AndromedaChain(guidance_url=os.getenv("GUIDANCE_URL", "http://0.0.0.0:9090"))
 prompts_module = codegen_guidance_prompts
 commands_mapping = build_command_mapping(prompts_module)
 
@@ -51,11 +53,9 @@ def read_root(command, request: Request):
         logger.info("(%s): '%s'", key, item)
     logger.info("Calling LLM...")
 
-    result = call_guidance(
-        prompt_template=prompt_to_apply.prompt_template,
-        input_vars=extracted_input,
-        output_vars=prompt_to_apply.output_vars,
-        guidance_kwargs={}
+    result = andromeda.run_guidance_prompt(
+        guidance_prompt=prompt_to_apply,
+        input_vars=extracted_input
     )
     logger.info("LLM output: '%s'", result)
     

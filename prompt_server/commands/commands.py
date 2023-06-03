@@ -4,7 +4,7 @@ from dataclasses import dataclass
 
 from custom_parser import function_parser, FailedToParseFunctionException
 from prompts_interface import PromptModuleInterface
-from guidance_prompt import GuidancePrompt
+from andromeda_chain import AndromedaPrompt, AndromedaResponse
 from typing import Dict, Tuple
 
 
@@ -13,11 +13,11 @@ logger = logging.getLogger("uvicorn")
 
 @dataclass
 class Command:
-    prompt: Dict[str, GuidancePrompt]
+    prompt: Dict[str, AndromedaPrompt]
 
 
     @abc.abstractclassmethod
-    def prompt_picker(self, input_: str) -> Tuple[str, GuidancePrompt, Dict[str, str]]:
+    def prompt_picker(self, input_: str) -> Tuple[str, AndromedaPrompt, Dict[str, str]]:
         raise NotImplementedError()
 
     @abc.abstractclassmethod
@@ -31,7 +31,7 @@ class DocStringCommand(Command):
         super().__init__(*args,**kwargs)
 
 
-    def prompt_picker(self, input_: str) -> Tuple[str, GuidancePrompt, Dict[str, str]]:
+    def prompt_picker(self, input_: str) -> Tuple[str, AndromedaPrompt, AndromedaResponse]:
         prompt_key = "None"
         try:
             function_header, function_body, leading_indentation, indentation_type = function_parser(input_)
@@ -51,10 +51,11 @@ class DocStringCommand(Command):
         logger.info("Chosen prompt: %s", prompt_key)
         return return_value
 
-    def output_extractor(self, prompt_key, extracted_input, result: Dict[str, str]) -> str:
+    def output_extractor(self, prompt_key, extracted_input, response: AndromedaResponse) -> str:
         if prompt_key == "generic_prompt":
-            return result["output"]
+            return response.result_vars["output"]
         elif prompt_key == "function_prompt":
+            result = response.result_vars
             ind = extracted_input["leading_indentation"]
 
             header_indentation = ind

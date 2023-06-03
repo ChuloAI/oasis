@@ -1,9 +1,9 @@
-from guidance_prompt import GuidancePrompt
+from andromeda_chain import AndromedaPrompt
 
 """Used only for type annotation purposes."""
 class PromptModuleInterface:
-    function_doc_string_guidance_prompt: GuidancePrompt
-    doc_string_guidance_prompt: GuidancePrompt
-    ADD_TYPE_HINTS: GuidancePrompt
-    CUSTOM_PROMPT: GuidancePrompt
-    FIX_SYNTAX_ERROR: GuidancePrompt
+    function_doc_string_guidance_prompt: AndromedaPrompt
+    doc_string_guidance_prompt: AndromedaPrompt
+    ADD_TYPE_HINTS: AndromedaPrompt
+    CUSTOM_PROMPT: AndromedaPrompt
+    FIX_SYNTAX_ERROR: AndromedaPrompt

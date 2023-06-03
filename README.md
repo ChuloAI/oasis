@@ -6,6 +6,50 @@ NOTE: main is currently unstable, developing the use of guidance prompts (see gu
 
 **WARNING**: Only add docstring to functions command is somewhat stable at the moment.
 
+## v0.2.0
+**Update: 03.06.2023**
+The guidance server code has been moved to a separate repository: https://github.com/ChuloAI/andromeda-chain
+
+If you're looking for the code version from Medium Article, try checking out v0.1.3 (more in next section).
+
+Starting this service now happens through Docker, and should be a lot easier.
+
+
+### Setup
+
+
+Requirements:
+
+    - docker-engine
+    - docker-compose v2
+
+If using GPU also:
+
+    - nvidia-docker: https://github.com/NVIDIA/nvidia-docker
+
+
+#### Clone this repo and download your desired model:
+```bash
+git clone https://github.com/paolorechia/oasis
+cd oasis
+mkdir models
+cd models
+git clone https://huggingface.co/Salesforce/codegen-350M-mono
+cd ..
+docker-compose -f docker-compose.cpu.yaml up
+```
+
+##### Running on GPU
+
+Change the command to use the other docker-compose file:
+
+```
+docker-compose -f docker-compose.cpu.yaml up
+```
+
+
+
+
 ## If using v0.1.3
 If you want to use text-generation-webui with simpler prompts, use v0.1.3. This is a deprecated feature, newer versions will no longer support `text-generation-webui`, at least for the time being.
 
