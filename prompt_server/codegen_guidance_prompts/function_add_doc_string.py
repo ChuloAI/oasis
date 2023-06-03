@@ -8,14 +8,14 @@ def print_hello_world():
 
 def print_hello_world():
 # Docstring below
-    \"\"\"This functions print the string 'hello_world' to the standard output.\"\"\"
+    \"\"\"Prints the string 'hello_world' to the standard output.\"\"\"
 
 def sum_2(x, y):
     return x + y
 
 def sum_2(x, y):
 # Docstring below
-    \"\"\"This functions receives two parameters and returns the sum.
+    \"\"\"Computes the sum of two numbers.
     
     Parameters:
         int: x - first number to sum
@@ -52,7 +52,7 @@ def call_guidance(prompt_template, output_vars, input_vars=None, guidance_kwargs
 def call_guidance(prompt_template, output_vars, input_vars=None, guidance_kwargs=None):
 # Docstring below
     \"\"\"
-    This function calls a guidance API with the given parameters and returns the response.
+    Calls a guidance API with the given parameters and returns the response.
     
     Parameters:
         prompt_template (str): The prompt template to use for the guidance.
@@ -89,9 +89,9 @@ def call_guidance(prompt_template, output_vars, input_vars=None, guidance_kwargs
 {{leading_indentation}}{{function_header}}
 {{function_body}}
 
-{{leading_indentation}}{{function_header}}
+{{function_header}}
 # Docstring below
-{{leading_indentation}}\"\"\"{{gen 'description' temperature=0.1 max_tokens=128 stop='.'}}
+\"\"\"{{gen 'description' temperature=0.1 max_tokens=128 stop='.'}}
 
 Parameters: {{gen 'parameters' temperature=0.1 max_tokens=128 stop='Returns:'}}
 Returns: {{gen 'returns' temperature=0.1 max_tokens=128 stop='\"\"\"'}}
