@@ -11,4 +11,4 @@ ENV PYTHONPATH "${PYTHONPATH}:/code"
 COPY . .
 
 # Set the entrypoint
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "9000", "--reload"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "9090", "--reload"]
