@@ -14,7 +14,7 @@ services:
       - "com.docker.compose.container-name=guidance-server"
       - "com.docker.compose.service=guidance-server"
       - "com.docker.compose.oneoff=False"
-      - "com.docker.compose.project=brainchulo-guidance-server"
+      - "com.docker.compose.project=guidance-server"
     # Add the "stop_signal: SIGINT" option to use SIGINT signal for stopping the container gracefully
     stop_signal: SIGINT
     environment:
@@ -35,7 +35,7 @@ services:
       - "com.docker.compose.container-name=guidance-server"
       - "com.docker.compose.service=guidance-server"
       - "com.docker.compose.oneoff=False"
-      - "com.docker.compose.project=brainchulo-guidance-server"
+      - "com.docker.compose.project=guidance-server"
     # Add the "stop_signal: SIGINT" option to use SIGINT signal for stopping the container gracefully
     stop_signal: SIGINT
     environment:
