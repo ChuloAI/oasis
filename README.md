@@ -44,7 +44,7 @@ docker-compose -f docker-compose.cpu.yaml up
 Change the command to use the other docker-compose file:
 
 ```
-docker-compose -f docker-compose.cpu.yaml up
+docker-compose -f docker-compose.gpu.yaml up
 ```
 
 
