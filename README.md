@@ -70,14 +70,8 @@ pip install -r requirements.txt
 ./start_uvicorn.sh
 ```
 
-## If using v0.1.5 or main
+## If using v0.1.5
 ### Installation
-
-Main:
-`git clone https://github.com/paolorechia/oasis`
-
-Or v0.1.5:
-
 ```bash
 git clone https://github.com/paolorechia/oasis
 cd oasis
