@@ -10,7 +10,7 @@ NOTE: main is currently unstable, developing the use of guidance prompts (see gu
 **Update: 03.06.2023**
 The guidance server code has been moved to a separate repository: https://github.com/ChuloAI/andromeda-chain
 
-If you're looking for the code version from Medium Article, try checking out v0.1.3 (more in next section).
+If you're looking for the code version from Medium Article, try checking out v0.1.5 (more in next section).
 
 Starting this service now happens through Docker, and should be a lot easier.
 
