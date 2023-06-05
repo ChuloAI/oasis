@@ -38,6 +38,9 @@ git clone https://huggingface.co/Salesforce/codegen-350M-mono
 cd ..
 docker-compose -f docker-compose.cpu.yaml up
 ```
+If you change the used model, make sure to update the injected environment variable MODEL_PATH passed to the guidance server container:
+
+https://github.com/ChuloAI/oasis/blob/4cd7da6f0866e26088f1a326acdf3f1f43d59660/docker-compose.cpu.yaml#L42
 
 ##### Running on GPU
 
